@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCB to IPEB Relocation Timeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f8fafc; font-family: sans-serif; }
+        .gantt-grid {
+            display: grid;
+            grid-template-columns: 120px repeat(11, 1fr);
+            gap: 4px;
+        }
+        .status-cell {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .active { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .suspended { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .partial { background-color: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+        .setup { background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+        .date-header { text-align: center; font-size: 0.7rem; color: #64748b; padding-bottom: 8px; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6">
+        <header class="mb-8 border-b pb-4">
+            <h1 class="text-2xl font-bold text-slate-800">MCB → IPEB Relocation Visualizer</h1>
+            <p class="text-slate-500">Facility Transition & Service Mapping (Dec 4 - Dec 14)</p>
+        </header>
+
+        <!-- Legend -->
+        <div class="flex flex-wrap gap-4 mb-6 text-sm">
+            <div class="flex items-center"><span class="w-4 h-4 active mr-2 rounded"></span> Full Service</div>
+            <div class="flex items-center"><span class="w-4 h-4 partial mr-2 rounded"></span> Partial / Trial</div>
+            <div class="flex items-center"><span class="w-4 h-4 suspended mr-2 rounded"></span> Suspended</div>
+            <div class="flex items-center"><span class="w-4 h-4 setup mr-2 rounded"></span> Prep / Move</div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <div class="min-w-[800px]">
+                <!-- Headers -->
+                <div class="gantt-grid mb-2">
+                    <div></div>
+                    <div class="date-header">4/12<br>Sat</div>
+                    <div class="date-header">5/12<br>Sun</div>
+                    <div class="date-header">6/12<br>Mon</div>
+                    <div class="date-header">7/12<br>Tue</div>
+                    <div class="date-header">8/12<br>Wed</div>
+                    <div class="date-header">9/12<br>Thu</div>
+                    <div class="date-header">10/12<br>Fri</div>
+                    <div class="date-header">11/12<br>Sat</div>
+                    <div class="date-header">12/12<br>Sun</div>
+                    <div class="date-header">13/12<br>Mon</div>
+                    <div class="date-header">14/12<br>Tue</div>
+                </div>
+
+                <!-- MCB Rows -->
+                <div class="space-y-1 mb-6">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Main Clinical Block (MCB)</div>
+                    <div class="gantt-grid">
+                        <div class="flex items-center text-sm font-medium">MCB 3/F</div>
+                        <div class="status-cell active">ACTIVE</div>
+                        <div class="status-cell active">ACTIVE</div>
+                        <div class="status-cell suspended" style="grid-column: span 9">SUSPENDED</div>
+                    </div>
+                    <div class="gantt-grid">
+                        <div class="flex items-center text-sm font-medium">MCB 5/F</div>
+                        <div class="status-cell active" style="grid-column: span 4">ACTIVE</div>
+                        <div class="status-cell partial" style="grid-column: span 3">EOT ONLY</div>
+                        <div class="status-cell suspended" style="grid-column: span 4">CLOSED</div>
+                    </div>
+                </div>
+
+                <!-- IPEB Rows -->
+                <div class="space-y-1 mb-8">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">In-Patient Extension Block (IPEB)</div>
+                    <div class="gantt-grid">
+                        <div class="flex items-center text-sm font-medium">IPEB 7/F</div>
+                        <div class="status-cell setup" style="grid-column: span 2">PREP</div>
+                        <div class="status-cell setup">SETUP</div>
+                        <div class="status-cell setup">SETUP</div>
+                        <div class="status-cell partial">TRIAL (3)</div>
+                        <div class="status-cell partial">TRIAL (5)</div>
+                        <div class="status-cell partial">TRIAL (7)</div>
+                        <div class="status-cell active" style="grid-column: span 2">FULL LISTS</div>
+                        <div class="status-cell active">FULL</div>
+                    </div>
+                    <div class="gantt-grid">
+                        <div class="flex items-center text-sm font-medium">IPEB 5/F</div>
+                        <div class="status-cell setup" style="grid-column: span 2">PREP</div>
+                        <div class="status-cell setup">SETUP</div>
+                        <div class="status-cell setup">SETUP</div>
+                        <div class="status-cell setup">EOT PREP</div>
+                        <div class="status-cell setup">EOT PREP</div>
+                        <div class="status-cell active">EOT START</div>
+                        <div class="status-cell active">EOT</div>
+                        <div class="status-cell active">EOT</div>
+                        <div class="status-cell partial">RESUMING</div>
+                        <div class="status-cell active">FULL</div>
+                    </div>
+                </div>
+
+                <!-- Lists Cut Bar Chart (Visualizing workload reduction) -->
+                <div class="bg-slate-50 p-4 rounded-lg">
+                    <h3 class="text-sm font-bold text-slate-700 mb-4 text-center underline">Workload Adjustment: Operating Theatre Lists Suspended</h3>
+                    <div class="flex items-end justify-around h-32 px-12">
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-slate-200 rounded-t h-0"></div>
+                            <span class="text-[10px] mt-1">4/12</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-slate-200 rounded-t h-0"></div>
+                            <span class="text-[10px] mt-1">5/12</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-red-400 rounded-t h-14"></div>
+                            <span class="text-[10px] font-bold text-red-600 mt-1">7</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-red-400 rounded-t h-14"></div>
+                            <span class="text-[10px] font-bold text-red-600 mt-1">7</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-red-500 rounded-t h-20"></div>
+                            <span class="text-[10px] font-bold text-red-700 mt-1">11</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-red-500 rounded-t h-16"></div>
+                            <span class="text-[10px] font-bold text-red-700 mt-1">9</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-red-400 rounded-t h-14"></div>
+                            <span class="text-[10px] font-bold text-red-600 mt-1">7</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-slate-200 rounded-t h-0"></div>
+                            <span class="text-[10px] mt-1">11/12</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-slate-200 rounded-t h-0"></div>
+                            <span class="text-[10px] mt-1">12/12</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-red-300 rounded-t h-6"></div>
+                            <span class="text-[10px] font-bold text-red-500 mt-1">3</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 bg-slate-200 rounded-t h-0"></div>
+                            <span class="text-[10px] mt-1">14/12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 grid md:grid-rows-2 gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <h4 class="text-blue-800 font-bold text-sm mb-2 uppercase">Logistics Milestone: F&E Move</h4>
+                <div class="relative pt-1">
+                    <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+                        <div style="width: 10%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-400"></div>
+                        <div style="width: 20%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                        <div style="width: 40%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"></div>
+                        <div style="width: 30%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-600"></div>
+                    </div>
+                    <div class="flex justify-between text-[10px] text-blue-600 font-bold uppercase">
+                        <span>Prep</span>
+                        <span>7/F Pilot</span>
+                        <span>5/F Pilot</span>
+                        <span>Mass Migration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
